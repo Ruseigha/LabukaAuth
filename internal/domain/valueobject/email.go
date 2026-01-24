@@ -13,7 +13,9 @@ type Email struct {
 
 func NewEmail(email string) (Email, error) {
 	
-		if strings.TrimSpace(email) == "" {
+		email = strings.TrimSpace(email)
+	
+		if email == "" {
 			return Email{}, domainErrors.ErrEmptyEmail
 		}
 
