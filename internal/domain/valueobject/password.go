@@ -79,3 +79,9 @@ func validatePasswordStrength(password string) error {
 func (p Password) Hash() string {
     return p.hashedValue
 }
+
+
+func NewPasswordFromHash(hashedPassword string) Password {
+    // No validation needed - already hashed and validated
+    return Password{hashedValue: hashedPassword}
+}
