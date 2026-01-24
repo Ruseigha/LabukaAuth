@@ -6,6 +6,7 @@ import (
 	"github.com/Ruseigha/LabukaAuth/internal/domain/valueobject"
 )
 
+// Valid Email Test
 func TestNewEmail_ValidEmail(t *testing.T) {
 	tests := []struct {
         name  string  // Test case name
@@ -63,6 +64,79 @@ func TestNewEmail_ValidEmail(t *testing.T) {
             
             if got.String() != tt.want {
                 t.Errorf("NewEmail() = %v, want %v", got.String(), tt.want)
+            }
+        })
+    }
+}
+
+
+// Invalid Emails test
+func TestNewEmail_InvalidEmail(t *testing.T) {
+    tests := []struct {
+        name      string
+        input     string
+        wantError string  // Expected error message (partial match)
+    }{
+        {
+            name:      "empty email",
+            input:     "",
+            wantError: "email cannot be empty",
+        },
+        {
+            name:      "whitespace only",
+            input:     "   ",
+            wantError: "email cannot be empty",
+        },
+        {
+            name:      "missing @",
+            input:     "userexample.com",
+            wantError: "invalid email format",
+        },
+        {
+            name:      "missing domain",
+            input:     "user@",
+            wantError: "invalid email format",
+        },
+        {
+            name:      "missing local part",
+            input:     "@example.com",
+            wantError: "invalid email format",
+        },
+        {
+            name:      "missing TLD",
+            input:     "user@example",
+            wantError: "invalid email format",
+        },
+        {
+            name:      "multiple @",
+            input:     "user@@example.com",
+            wantError: "invalid email format",
+        },
+        {
+            name:      "spaces in email",
+            input:     "user name@example.com",
+            wantError: "invalid email format",
+        },
+        {
+            name:      "invalid characters",
+            input:     "user!#$@example.com",
+            wantError: "invalid email format",
+        },
+    }
+    
+    for _, tt := range tests {
+        t.Run(tt.name, func(t *testing.T) {
+            got, err := valueobject.NewEmail(tt.input)
+            
+            // We EXPECT an error
+            if err == nil {
+                t.Errorf("NewEmail() expected error, got valid email: %v", got.String())
+                return
+            }
+            
+            // Check error message contains expected text
+            if err.Error() != tt.wantError {
+                t.Errorf("NewEmail() error = %v, want %v", err.Error(), tt.wantError)
             }
         })
     }
