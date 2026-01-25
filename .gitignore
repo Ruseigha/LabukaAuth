@@ -1,0 +1,29 @@
+# Environment files with secrets
+.env
+.env.local
+.env.production
+
+# Keep .env.example (template without secrets)
+!.env.example
+!.env.production.example
+
+# Test artifacts
+coverage.out
+coverage.html
+*.test
+
+# Build artifacts
+/bin/
+/dist/
+auth-service
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
