@@ -8,13 +8,14 @@ import (
 )
 
 type UserDocument struct {
-	ID string `bson:"_id,omitempty"`
-	Email string `bson:"email"`
-	Password string `bson:"password"`
+	ID        string    `bson:"_id,omitempty"`
+	Email     string    `bson:"email"`
+	Password  string    `bson:"password"`
 	CreatedAt time.Time `bson:"created_at"`
 	UpdatedAt time.Time `bson:"updated_at"`
-	IsActive bool `bson:"is_active"`
+	IsActive  bool      `bson:"is_active"`
 }
+
 func (d *UserDocument) toEntity() (*entity.User, error) {
 	// Reconstruct UserID value object
 	userID, err := valueobject.NewUserIDFromString(d.ID)
