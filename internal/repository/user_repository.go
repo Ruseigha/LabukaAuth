@@ -14,4 +14,6 @@ type UserRepository interface {
 	Update(ctx context.Context, user *entity.User) error
 	Delete(ctx context.Context, id valueobject.UserID) error
 	ExistsByEmail(ctx context.Context, email valueobject.Email) (bool, error)
+	List(ctx context.Context, offset, limit int) ([]*entity.User, error)
+	Count(ctx context.Context) (int64, error)
 }
