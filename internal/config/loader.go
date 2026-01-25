@@ -8,7 +8,6 @@ import (
 	"time"
 )
 
-
 func Load() (*Config, error) {
 	// Start with defaults
 	cfg := DefaultConfig()
@@ -132,7 +131,6 @@ func LoadFromFile(filepath string) (*Config, error) {
 	return Load()
 }
 
-
 func loadEnvFile(filepath string) error {
 	// Read file
 	data, err := os.ReadFile(filepath)
@@ -170,7 +168,6 @@ func loadEnvFile(filepath string) error {
 
 	return nil
 }
-
 
 // Accepts: true, false, 1, 0, yes, no (case-insensitive)
 func parseBool(s string) bool {
