@@ -83,15 +83,22 @@ deps: ## Download dependencies
 check: fmt vet test ## Run all checks (fmt, vet, test)
 	@echo "${GREEN}All checks passed!${NC}"
 
+.PHONY: mongodb-status
+mongodb-status: ## Check local MongoDB status
+	@echo "${GREEN}Checking MongoDB status...${NC}"
+	@mongosh --eval "db.adminCommand('ping')" --quiet > /dev/null 2>&1 && \
+		echo "${GREEN}✓ MongoDB is running${NC}" || \
+		echo "${YELLOW}✗ MongoDB is not running${NC}"
+
 .PHONY: mongodb-start
-mongodb-start: ## Start local MongoDB (if not running as service)
+mongodb-start: ## Start local MongoDB
 	@echo "${GREEN}Starting MongoDB...${NC}"
 	@if command -v brew > /dev/null 2>&1; then \
 		brew services start mongodb-community@7.0; \
 	elif command -v systemctl > /dev/null 2>&1; then \
 		sudo systemctl start mongod; \
-	elif command -v net > /dev/null 2>&1; then \
-		net start MongoDB; \
+	elif command -v sc > /dev/null 2>&1; then \
+		sc start MongoDB; \
 	else \
 		echo "${YELLOW}Please start MongoDB manually${NC}"; \
 	fi
@@ -103,18 +110,20 @@ mongodb-stop: ## Stop local MongoDB
 		brew services stop mongodb-community@7.0; \
 	elif command -v systemctl > /dev/null 2>&1; then \
 		sudo systemctl stop mongod; \
-	elif command -v net > /dev/null 2>&1; then \
-		net stop MongoDB; \
+	elif command -v sc > /dev/null 2>&1; then \
+		sc stop MongoDB; \
 	else \
 		echo "${YELLOW}Please stop MongoDB manually${NC}"; \
 	fi
 
-.PHONY: mongodb-status
-mongodb-status: ## Check MongoDB status
-	@echo "${GREEN}Checking MongoDB status...${NC}"
-	@mongosh --eval "db.adminCommand('ping')" --quiet && \
-		echo "${GREEN}✓ MongoDB is running${NC}" || \
-		echo "${YELLOW}✗ MongoDB is not running${NC}"
+.PHONY: mongodb-shell
+mongodb-shell: ## Open MongoDB shell for test database
+	@mongosh auth_service_test
+
+.PHONY: mongodb-clean
+mongodb-clean: ## Drop test database
+	@echo "${GREEN}Dropping test database...${NC}"
+	@mongosh auth_service_test --eval "db.dropDatabase()" --quiet
 
 .PHONY: test-integration
 test-integration: ## Run integration tests (requires local MongoDB)
@@ -131,3 +140,18 @@ test-integration-clean: ## Run integration tests with clean database
 
 .PHONY: test-all
 test-all: test test-integration ## Run all tests (unit + integration)
+
+.PHONY: docker-test-up
+docker-test-up: ## Start Docker test MongoDB
+	@echo "${GREEN}Starting Docker test MongoDB...${NC}"
+	@docker-compose -f docker/docker-compose.test.yml up -d --wait
+	@echo "${GREEN}MongoDB ready!${NC}"
+
+.PHONY: docker-test-down
+docker-test-down: ## Stop Docker test MongoDB
+	@echo "${GREEN}Stopping Docker test MongoDB...${NC}"
+	@docker-compose -f docker/docker-compose.test.yml down -v
+
+.PHONY: docker-test-logs
+docker-test-logs: ## View Docker MongoDB logs
+	@docker-compose -f docker/docker-compose.test.yml logs -f
