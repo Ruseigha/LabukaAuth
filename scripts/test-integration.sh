@@ -13,13 +13,13 @@ echo ""
 # Check if MongoDB is running
 echo -e "${YELLOW}Checking MongoDB...${NC}"
 if ! mongosh --eval "db.adminCommand('ping')" --quiet > /dev/null 2>&1; then
-    echo -e "${RED}✗ MongoDB is not running!${NC}"
-    echo ""
-    echo "Please start MongoDB:"
-    echo "  macOS:   brew services start mongodb-community@7.0"
-    echo "  Linux:   sudo systemctl start mongod"
-    echo "  Windows: net start MongoDB"
-    exit 1
+  echo -e "${RED}✗ MongoDB is not running!${NC}"
+  echo ""
+  echo "Please start MongoDB:"
+  echo "  macOS:   brew services start mongodb-community@7.0"
+  echo "  Linux:   sudo systemctl start mongod"
+  echo "  Windows: net start MongoDB"
+  exit 1
 fi
 echo -e "${GREEN}✓ MongoDB is running${NC}"
 echo ""
