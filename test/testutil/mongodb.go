@@ -1,5 +1,17 @@
 package testutil
 
+import (
+	"context"
+	"fmt"
+	"os"
+	"testing"
+	"time"
+
+	"github.com/Ruseigha/LabukaAuth/internal/config"
+	"github.com/Ruseigha/LabukaAuth/internal/infrastructure/persistence/mongodb"
+	"go.mongodb.org/mongo-driver/mongo"
+)
+
 type TestMongoDBClient struct {
 	client     *mongodb.Client
 	database   *mongo.Database
@@ -16,7 +28,7 @@ func SetupMongoDB(t *testing.T) *TestMongoDBClient {
 
 	// Override from environment if set
 	// WHY: CI/CD might use different host
-	if uri := t.Getenv("MONGO_URI"); uri != "" {
+	if uri := os.Getenv("MONGO_URI"); uri != "" {
 		cfg.Database.URI = uri
 	}
 
