@@ -32,7 +32,7 @@ echo ""
 
 # Run tests
 echo -e "${YELLOW}Running integration tests...${NC}"
-go test -v -race -cover ./test/integration/...
+CGO_ENABLED=0 go test -v  -cover ./test/integration/...
 
 # Exit with test result
 exit $?
