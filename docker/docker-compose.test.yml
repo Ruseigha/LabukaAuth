@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  # MongoDB for testing
+  mongodb-test:
+    image: mongo:7.0 # Use specific version for consistency
+    container_name: auth-service-mongodb-test
+    ports:
+      - "27017:27017" # Expose on localhost
+    environment:
+      # No authentication for local testing (simplicity)
+      MONGO_INITDB_DATABASE: auth_service_test
+    volumes:
+      # Use tmpfs for speed (in-memory storage)
+      # WHY: Tests don't need persistent data
+      - type: tmpfs
+        target: /data/db
+    healthcheck:
+      # Check if MongoDB is ready
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
