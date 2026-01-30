@@ -49,24 +49,19 @@ func validatePasswordStrength(password string) error {
 		}
 	}
 
-	// Business Rule: Password must have at least 3 of 4 character types
-	// WHY: Balance security and usability
-	typesCount := 0
-	if hasUpper {
-		typesCount++
+	// Business Rule: Password must have all 4 character types
+	// WHY: Ensure strong password security
+	if !hasUpper {
+		return errors.New("password must contain at least one uppercase letter")
 	}
-	if hasLower {
-		typesCount++
+	if !hasLower {
+		return errors.New("password must contain at least one lowercase letter")
 	}
-	if hasNumber {
-		typesCount++
+	if !hasNumber {
+		return errors.New("password must contain at least one number")
 	}
-	if hasSpecial {
-		typesCount++
-	}
-
-	if typesCount < 3 {
-		return errors.New("password must contain at least 3 of: uppercase, lowercase, number, special character")
+	if !hasSpecial {
+		return errors.New("password must contain at least one special character")
 	}
 
 	return nil
