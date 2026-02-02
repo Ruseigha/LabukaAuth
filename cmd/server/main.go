@@ -13,6 +13,7 @@ import (
 	httpdelivery "github.com/Ruseigha/LabukaAuth/internal/delivery/http"
 	"github.com/Ruseigha/LabukaAuth/internal/infrastructure/persistence/mongodb"
 	"github.com/Ruseigha/LabukaAuth/internal/infrastructure/security"
+	"github.com/Ruseigha/LabukaAuth/internal/usecase/auth"
 )
 
 func main() {
