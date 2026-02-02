@@ -84,7 +84,7 @@ make test-all
 
 **1. Install Docker:**
 
-- Docker Desktop: https://www.docker.com/products/docker-desktop
+- Docker Desktop: [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
 
 **2. Setup project:**
 
