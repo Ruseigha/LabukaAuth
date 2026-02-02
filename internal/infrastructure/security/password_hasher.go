@@ -24,6 +24,14 @@ func NewBcryptHasher(cost int) *BcryptHasher {
 	}
 }
 
+func (h *BcryptHasher) Hash(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), h.cost)
+	if err != nil {
+		return "", err
+	}
+	return string(hash), nil
+}
+
 func (h *BcryptHasher) Compare(hashedPassword, password string) error {
 	// bcrypt.CompareHashAndPassword is constant-time
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
