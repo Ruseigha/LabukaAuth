@@ -287,7 +287,7 @@ MIT License - see [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- Your Name - [@yourhandle](https://github.com/yourhandle)
+- Your Name - [@Ruseigha](https://github.com/Ruseigha)
 
 ## 🙏 Acknowledgments
 
