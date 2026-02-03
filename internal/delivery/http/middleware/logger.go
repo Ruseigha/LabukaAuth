@@ -10,8 +10,8 @@ import (
 // WHY: Standard ResponseWriter doesn't expose status code
 type responseWriter struct {
 	http.ResponseWriter
-	statusCode int
-	written    int64
+	statusCode    int
+	written       int64
 	headerWritten bool
 }
 
