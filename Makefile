@@ -160,3 +160,14 @@ docker-test-logs: ## View Docker MongoDB logs
 run: ## Run the server (loads .env automatically)
 	@echo "${GREEN}Starting auth service...${NC}"
 	go run cmd/server/main.go
+
+.PHONY: proto
+proto: ## Generate protobuf code
+	@echo "${GREEN}Generating protobuf code...${NC}"
+	./scripts/generate-proto.sh
+
+.PHONY: proto-install
+proto-install: ## Install protobuf tools
+	@echo "${GREEN}Installing protobuf tools...${NC}"
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest

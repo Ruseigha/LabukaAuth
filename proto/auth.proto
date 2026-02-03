@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package proto;
+
+
+option go_package = "github.com/Ruseigha/LabukaAuth/internal/delivery/grpc/proto";
+
+// AuthService defines authentication related RPCs
+service AuthService {
+  // Signup registers a new user
+  rpc Signup(SignupRequest) returns (AuthResponse);
+  
+  // Login authenticates a user
+  rpc Login(LoginRequest) returns (AuthResponse);
+  
+  // RefreshToken generates new tokens
+  rpc RefreshToken(RefreshTokenRequest) returns (AuthResponse);
+  
+  // ValidateToken validates an access token
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+}
+
+// SignupRequest contains user registration data
+message SignupRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// LoginRequest contains user credentials
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// RefreshTokenRequest contains refresh token
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+// ValidateTokenRequest contains access token
+message ValidateTokenRequest {
+  string access_token = 1;
+}
+
+// AuthResponse contains authentication tokens
+message AuthResponse {
+  string user_id = 1;
+  string email = 2;
+  string access_token = 3;
+  string refresh_token = 4;
+}
+
+// ValidateTokenResponse contains validation result
+message ValidateTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string email = 3;
+}
