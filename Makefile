@@ -155,3 +155,8 @@ docker-test-down: ## Stop Docker test MongoDB
 .PHONY: docker-test-logs
 docker-test-logs: ## View Docker MongoDB logs
 	@docker-compose -f docker/docker-compose.test.yml logs -f
+
+.PHONY: run
+run: ## Run the server (loads .env automatically)
+	@echo "${GREEN}Starting auth service...${NC}"
+	go run cmd/server/main.go

@@ -12,6 +12,7 @@ type responseWriter struct {
 	http.ResponseWriter
 	statusCode int
 	written    int64
+	headerWritten bool
 }
 
 // newResponseWriter creates a wrapped response writer
@@ -19,17 +20,24 @@ func newResponseWriter(w http.ResponseWriter) *responseWriter {
 	return &responseWriter{
 		ResponseWriter: w,
 		statusCode:     http.StatusOK, // Default to 200
+		headerWritten:  false,
 	}
 }
 
 // WriteHeader captures status code
 func (rw *responseWriter) WriteHeader(code int) {
-	rw.statusCode = code
-	rw.ResponseWriter.WriteHeader(code)
+	if !rw.headerWritten {
+		rw.statusCode = code
+		rw.headerWritten = true
+		rw.ResponseWriter.WriteHeader(code)
+	}
 }
 
-// Write captures bytes written
+// Write captures bytes written and ensures header is written
 func (rw *responseWriter) Write(b []byte) (int, error) {
+	if !rw.headerWritten {
+		rw.WriteHeader(http.StatusOK)
+	}
 	n, err := rw.ResponseWriter.Write(b)
 	rw.written += int64(n)
 	return n, err
