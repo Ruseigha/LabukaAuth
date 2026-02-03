@@ -3,7 +3,7 @@ syntax = "proto3";
 package proto;
 
 
-option go_package = "github.com/Ruseigha/LabukaAuth/internal/delivery/grpc/proto"
+option go_package = "github.com/Ruseigha/LabukaAuth/internal/delivery/grpc/proto";
 
 // AuthService defines authentication related RPCs
 service AuthService {
