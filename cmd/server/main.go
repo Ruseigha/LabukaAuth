@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/Ruseigha/LabukaAuth/internal/config"
+	grpcdelivery "github.com/Ruseigha/LabukaAuth/internal/delivery/grpc"
 	httpdelivery "github.com/Ruseigha/LabukaAuth/internal/delivery/http"
 	"github.com/Ruseigha/LabukaAuth/internal/infrastructure/persistence/mongodb"
 	"github.com/Ruseigha/LabukaAuth/internal/infrastructure/security"
@@ -76,11 +77,22 @@ func main() {
 		IdleTimeout:  cfg.Server.IdleTimeout,
 	}
 
-	// Start server in goroutine
+	// Setup gRPC server
+	grpcServer := grpcdelivery.SetupServer(authService)
+
+	// Start HTTP server
 	go func() {
 		log.Printf("🚀 HTTP server listening on port %s", cfg.Server.HTTPPort)
 		if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("Server failed: %v", err)
+		}
+	}()
+
+	// Start gRPC server
+	go func() {
+		log.Printf("🚀 gRPC server listening on port %s", cfg.Server.GRPCPort)
+		if err := grpcdelivery.StartServer(grpcServer, cfg.Server.GRPCPort); err != nil {
+			log.Fatalf("gRPC server failed: %v", err)
 		}
 	}()
 
@@ -98,6 +110,9 @@ func main() {
 	if err := server.Shutdown(shutdownCtx); err != nil {
 		log.Printf("Server forced to shutdown: %v", err)
 	}
+
+	// Shutdown gRPC
+	grpcServer.GracefulStop()
 
 	log.Println("✓ Server stopped gracefully")
 }
