@@ -1,14 +1,14 @@
 package handler
 
 import (
-    "context"
-    "errors"
+	"context"
+	"errors"
 
-    domainerrors "github.com/Ruseigha/LabukaAuth/internal/domain/errors"
-    "github.com/Ruseigha/LabukaAuth/internal/usecase"
-    "github.com/Ruseigha/LabukaAuth/proto"
-    "google.golang.org/grpc/codes"
-    "google.golang.org/grpc/status"
+	"github.com/Ruseigha/LabukaAuth/internal/delivery/grpc/proto/proto"
+	domainerrors "github.com/Ruseigha/LabukaAuth/internal/domain/errors"
+	"github.com/Ruseigha/LabukaAuth/internal/usecase"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 // AuthHandler implements gRPC AuthServiceServer

@@ -12,9 +12,9 @@ mkdir -p internal/delivery/grpc/proto
 
 # Generate Go code
 protoc \
-  --go_out=. \
+  --go_out=internal/delivery/grpc/proto \
   --go_opt=paths=source_relative \
-  --go-grpc_out=. \
+  --go-grpc_out=internal/delivery/grpc/proto \
   --go-grpc_opt=paths=source_relative \
   proto/auth.proto
 
