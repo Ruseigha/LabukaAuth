@@ -9,6 +9,7 @@ import (
 	"github.com/Ruseigha/LabukaAuth/internal/delivery/grpc/proto/proto"
 	"github.com/Ruseigha/LabukaAuth/internal/usecase"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 // SetupServer creates and configures gRPC server
@@ -24,6 +25,9 @@ func SetupServer(authService usecase.AuthUseCase) *grpc.Server {
 	// Register auth service
 	authHandler := handler.NewAuthHandler(authService)
 	proto.RegisterAuthServiceServer(server, authHandler)
+
+	// Register reflection for grpcurl and other tools
+	reflection.Register(server)
 
 	return server
 }

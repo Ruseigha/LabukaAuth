@@ -1,0 +1,51 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+docs/
+
+# Build artifacts
+bin/
+*.test
+coverage.out
+coverage.html
+
+# Dependencies (we download fresh in Docker)
+vendor/
+
+# Environment files (secrets!)
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test files
+test/
+*_test.go
+
+# Development tools
+.air.toml
+
+# Keys (CRITICAL - never include in image!)
+keys/private.pem
+*.key
+*.pem
+!keys/public.pem.example
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

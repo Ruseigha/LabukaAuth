@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  # Auth Service
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: auth-service
+    ports:
+      - "8001:8001" # HTTP
+      - "9001:9001" # gRPC
+    environment:
+      # App
+      APP_NAME: auth-service
+      APP_ENV: development
+      APP_VERSION: 1.0.0
+
+      # Server
+      HTTP_PORT: 8001
+      GRPC_PORT: 9001
+
+      # MongoDB
+      MONGO_URI: mongodb://mongodb:27017
+      MONGO_DATABASE: auth_service_dev
+
+      # JWT
+      JWT_SECRET_KEY: dev-secret-key-min-32-characters-long
+      JWT_ACCESS_TOKEN_EXPIRY: 15m
+      JWT_REFRESH_TOKEN_EXPIRY: 168h
+      JWT_ISSUER: auth-service
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - microservices
+    restart: unless-stopped
+
+  # MongoDB
+  mongodb:
+    image: mongo:7.0
+    container_name: auth-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - microservices
+    restart: unless-stopped
+
+networks:
+  microservices:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+    driver: local
