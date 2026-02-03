@@ -14,10 +14,17 @@ import (
 	"github.com/Ruseigha/LabukaAuth/internal/infrastructure/persistence/mongodb"
 	"github.com/Ruseigha/LabukaAuth/internal/infrastructure/security"
 	"github.com/Ruseigha/LabukaAuth/internal/usecase/auth"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	// Load configuration
+	// Load .env file (IMPORTANT: This loads environment variables)
+	// Try to load .env, but don't fail if it doesn't exist (production uses real env vars)
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using system environment variables")
+	}
+
+	// Load configuration from environment variables
 	cfg, err := config.Load()
 	if err != nil {
 		log.Fatalf("Failed to load config: %v", err)
