@@ -6,7 +6,7 @@ Production-ready authentication microservice built with Go, Clean Architecture, 
 [![codecov](https://codecov.io/gh/your-org/auth-service/branch/main/graph/badge.svg)](https://codecov.io/gh/your-org/auth-service)
 [![Go Report Card](https://goreportcard.com/badge/github.com/your-org/auth-service)](https://goreportcard.com/report/github.com/your-org/auth-service)
 
-## 🚀 Features
+## Features
 
 - **Clean Architecture** - Domain-driven design with clear separation of concerns
 - **Dual Transport** - HTTP REST API + gRPC for service-to-service
@@ -16,7 +16,7 @@ Production-ready authentication microservice built with Go, Clean Architecture, 
 - **Comprehensive Testing** - Unit tests, integration tests, 95%+ coverage
 - **Security** - Rate limiting, password hashing (bcrypt), input validation
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
@@ -28,14 +28,14 @@ Production-ready authentication microservice built with Go, Clean Architecture, 
 - [Configuration](#configuration)
 - [Contributing](#contributing)
 
-## 🔧 Prerequisites
+## Prerequisites
 
 - **Go** 1.21+
 - **MongoDB** 7.0+
 - **Docker** & Docker Compose (optional)
 - **Protocol Buffers** compiler (for gRPC)
 
-## ⚡ Quick Start
+## Quick Start
 
 ### Local Development
 ```bash
@@ -72,7 +72,7 @@ docker-compose logs -f
 docker-compose down
 ```
 
-## 🏛️ Architecture
+## Architecture
 ```
 auth-service/
 ├── cmd/server/              # Application entry point
@@ -100,7 +100,7 @@ auth-service/
 └─────────────────────────────────────────┘
 ```
 
-## 📡 API Documentation
+## API Documentation
 
 ### HTTP Endpoints
 
@@ -151,7 +151,7 @@ grpcurl -plaintext \
 }
 ```
 
-## 🛠️ Development
+## Development
 
 ### Available Commands
 ```bash
@@ -174,7 +174,7 @@ make docker-build          # Build Docker image
 - **internal/infrastructure/** - External integrations (MongoDB, JWT)
 - **internal/delivery/** - Transport layers (HTTP, gRPC)
 
-## 🧪 Testing
+## Testing
 ```bash
 # Unit tests (fast, no dependencies)
 make test
@@ -198,7 +198,7 @@ make benchmark
 - **Use Case Layer**: 95%+
 - **Overall**: 90%+
 
-## 🚢 Deployment
+## Deployment
 
 ### Docker
 ```bash
@@ -242,7 +242,7 @@ spec:
               key: uri
 ```
 
-## ⚙️ Configuration
+## Configuration
 
 Configuration via environment variables:
 ```bash
@@ -266,7 +266,7 @@ JWT_REFRESH_TOKEN_EXPIRY=168h
 
 See `.env.example` for complete configuration.
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create feature branch (`git checkout -b feature/amazing-feature`)
@@ -281,15 +281,15 @@ See `.env.example` for complete configuration.
 - Update documentation
 - Run `make lint` before committing
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file
 
-## 👥 Authors
+## Authors
 
 - [@Ruseigha](https://github.com/Ruseigha)
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Clean Architecture by Robert C. Martin
 - Domain-Driven Design by Eric Evans
